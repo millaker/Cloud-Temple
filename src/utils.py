@@ -61,9 +61,6 @@ def send_template_carousel(id, alt_text, columns):
 
     return "OK"
 
-# Dice roll
-# Show prophecy
-
 # Check if input is "return"
 def is_return(text):
     return text == "return"

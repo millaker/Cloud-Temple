@@ -130,10 +130,10 @@ explanation = [
     "因為平時多做善事，想要完成心願時，就能神明保佑，能自然而地得到財寶（完成心願）。",
     "運氣來的事後就像在月亮出來的時候，光輝照耀，做事順利。但是月亮的光輝也有被雲遮住的時候，在這個時候時運不濟，需要自我反省檢討、多充實自己、多做好事，這樣當機會來臨的時候，你平日的累積將會幫助你成功。此籤中「戶內」二字，所以欲離家外出發展者不宜。「再作福」有第一次未能成功，需要再次努力的意涵。",
     "已解釋",
-    "已解釋"
+    "已解釋",
 ]
 class TocMachine(GraphMachine):
-    ngrok_url = "https://801b-58-114-82-32.jp.ngrok.io"
+    server_url = "https://d947-58-114-82-32.jp.ngrok.io"
     static_folder = "/assets/img/"
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
@@ -141,6 +141,22 @@ class TocMachine(GraphMachine):
         self.card = 0
 
     # Transition conditions
+    def is_going_to_history(self, event):
+        text = event.message.text
+        if is_return(text):
+            return False
+        if text != "history":
+            return False
+        return True
+    
+    def is_going_to_donate(self, event):
+        text = event.message.text
+        if is_return(text):
+            return False
+        if text != "donate":
+            return False
+        return True
+
     def is_going_to_Door(self, event):
         text = event.message.text
         if is_return(text):
@@ -196,10 +212,16 @@ class TocMachine(GraphMachine):
         return True
     # Function called on entering a new state
     def on_enter_Main(self, event):
-        send_text_message(event.reply_token, "Entering Main, type visit to start")
+        send_text_message(event.reply_token, "Entering Main, type visit to start, history or donate")
+
+    def on_enter_history(self, event):
+        send_text_message(event.reply_token, "Entering history, return to return")
+
+    def on_enter_donate(self, event):
+        send_text_message(event.reply_token, "Entering donate, return to return")
 
     def on_enter_Door(self, event):
-        send_image_url(event.reply_token, self.ngrok_url + self.static_folder + "door.jpg")
+        send_image_url(event.reply_token, self.server_url + self.static_folder + "door.jpg")
         push_message(event.source.user_id, "Type pray to proceed")
 
     def on_enter_Meditation(self, event):
@@ -228,23 +250,23 @@ class TocMachine(GraphMachine):
     def on_enter_DiceOne(self, event):
         num = rand.randint(1, 6)
         self.diceroll = num
-        send_image_url(event.reply_token, self.ngrok_url + self.static_folder + "success.jpg")
+        send_image_url(event.reply_token, self.server_url + self.static_folder + "success.jpg")
         push_message(event.source.user_id, "1/3, type cast")
 
     def on_enter_DiceTwo(self, event):
         num = rand.randint(1, 6)
         self.diceroll = num
-        send_image_url(event.reply_token, self.ngrok_url + self.static_folder + "success.jpg")
+        send_image_url(event.reply_token, self.server_url + self.static_folder + "success.jpg")
         push_message(event.source.user_id, "2/3, type cast")
 
     def on_enter_DiceThree(self, event):
         num = rand.randint(1, 6)
         self.diceroll = num
-        send_image_url(event.reply_token, self.ngrok_url + self.static_folder + "success.jpg")
+        send_image_url(event.reply_token, self.server_url + self.static_folder + "success.jpg")
         push_message(event.source.user_id, "3/3, type reveal")
 
     def on_enter_Result(self, event):
-        send_image_url(event.reply_token, self.ngrok_url + self.static_folder + "card" + str(self.card) + ".jpg")
+        send_image_url(event.reply_token, self.server_url + self.static_folder + "card" + str(self.card) + ".jpg")
         push_message(event.source.user_id, "Entering Result, type translate")
 
     def on_enter_Meaning(self, event):
@@ -255,6 +277,6 @@ class TocMachine(GraphMachine):
 
     def on_enter_Fail(self, event):
         num = rand.randint(1,2)
-        send_image_url(event.reply_token, self.ngrok_url + self.static_folder + "fail" + str(num) + ".jpg")
+        send_image_url(event.reply_token, self.server_url + self.static_folder + "fail" + str(num) + ".jpg")
         push_message(event.source.user_id, "type draw to redraw")
 

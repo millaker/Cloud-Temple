@@ -1,8 +1,37 @@
 from fsm import TocMachine
 
-states = ["Main", "Door", "Meditation", "Start", "DiceOne", "DiceTwo",
+states = ["user", "Main", "Door", "history", "donate", "Meditation", "Start", "DiceOne", "DiceTwo",
           "DiceThree", "Result", "Meaning", "Explanation", "Fail"]
 transitions = [
+    {
+        "trigger" : "advance",
+        "source" : "user",
+        "dest" : "Main",
+    },
+    {
+        "trigger" : "advance",
+        "source" : "Main",
+        "dest" : "history",
+        "conditions" : "is_going_to_history"
+    },
+    {
+        "trigger" : "advance",
+        "source" : "history",
+        "dest" : "Main",
+        "conditions" : "is_going_to_Main"
+    },
+    {
+        "trigger" : "advance",
+        "source" : "Main",
+        "dest" : "donate",
+        "conditions" : "is_going_to_donate"
+    },
+    {
+        "trigger" : "advance",
+        "source" : "donate",
+        "dest" : "Main",
+        "conditions" : "is_going_to_Main"
+    },
     {
         "trigger" : "advance",
         "source" : "Main",
@@ -95,7 +124,8 @@ transitions = [
 ]
 
 def create_machine():
-    machine = TocMachine(states = states, transitions = transitions, initial = "Main",
+    machine = TocMachine(states = states, transitions = transitions, initial = "user",
                          auto_transitions = False,
                          show_conditions = True)
+    machine.get_graph().draw('my_state_diagram.png', prog = 'dot')
     return machine
