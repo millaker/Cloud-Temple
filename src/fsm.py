@@ -220,11 +220,11 @@ class TocMachine(GraphMachine):
         "過程隨時可以輸入 return 返回主頁")
 
     def on_enter_history(self, event):
-        send_text_message(event.reply_token, "Entering history, return to return")
+        send_text_message(event.reply_token, "起源於2022，為了讓大眾能在線上也能享受到抽籤解籤的服務")
 
     def on_enter_donate(self, event):
         send_image_url(event.reply_token, self.server_url + self.static_folder + "donation_box.jpg")
-        push_message(event.source.user_id, "請考慮幫我們維護")
+        push_message(event.source.user_id, "請支持我們，讓我們可以繼續維護平台")
     def on_enter_Door(self, event):
         send_image_url(event.reply_token, self.server_url + self.static_folder + "door.jpg")
         push_message(event.source.user_id, "輸入 pray 開始參拜")
@@ -247,25 +247,25 @@ class TocMachine(GraphMachine):
         )
 
     def on_enter_Start(self, event):
-        self.diceroll = rand.randint(1, 6)
+        self.diceroll = rand.randint(1, 100)
         self.card = rand.randint(1, 62)
 
         send_text_message(event.reply_token, "來看看這張籤是不是屬於你的 輸入 cast 擲筊")
 
     def on_enter_DiceOne(self, event):
-        num = rand.randint(1, 6)
+        num = rand.randint(1, 100)
         self.diceroll = num
         send_image_url(event.reply_token, self.server_url + self.static_folder + "success.jpg")
         push_message(event.source.user_id, "成功 還要成功兩次，輸入 cast 再擲一次")
 
     def on_enter_DiceTwo(self, event):
-        num = rand.randint(1, 6)
+        num = rand.randint(1, 100)
         self.diceroll = num
         send_image_url(event.reply_token, self.server_url + self.static_folder + "success.jpg")
         push_message(event.source.user_id, "成功 還要成功一次")
 
     def on_enter_DiceThree(self, event):
-        num = rand.randint(1, 6)
+        num = rand.randint(1, 100)
         self.diceroll = num
         send_image_url(event.reply_token, self.server_url + self.static_folder + "success.jpg")
         push_message(event.source.user_id, "成功 輸入 reveal 來看抽籤結果")
@@ -275,10 +275,10 @@ class TocMachine(GraphMachine):
         push_message(event.source.user_id, "輸入 translate 看籤詩語意")
 
     def on_enter_Meaning(self, event):
-        send_text_message(event.reply_token, meaning[self.card - 1] + "輸入 explain 來解籤")
+        send_text_message(event.reply_token, meaning[self.card - 1] + "\n輸入 explain 來解籤")
 
     def on_enter_Explanation(self, event):
-        send_text_message(event.reply_token, explanation[self.card - 1] + "輸入任何東西回到主頁")
+        send_text_message(event.reply_token, explanation[self.card - 1] + "\n輸入任何東西回到主頁")
 
     def on_enter_Fail(self, event):
         num = rand.randint(1,2)
