@@ -8,9 +8,6 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from utils import send_image_url, send_text_message, is_return, is_passed_roll
 from machine import create_machine
 
-from dotenv import load_dotenv
-
-load_dotenv()
 app = Flask(__name__, static_folder = "assets")
 
 # Get channel_secret and channel_access_token from environment variable
