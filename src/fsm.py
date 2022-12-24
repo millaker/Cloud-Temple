@@ -133,7 +133,7 @@ explanation = [
     "已解釋",
 ]
 class TocMachine(GraphMachine):
-    server_url = "https://d947-58-114-82-32.jp.ngrok.io"
+    server_url = "https://fc25-58-114-82-32.jp.ngrok.io"
     static_folder = "/assets/img/"
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
