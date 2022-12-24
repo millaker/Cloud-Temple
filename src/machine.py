@@ -127,5 +127,4 @@ def create_machine():
     machine = TocMachine(states = states, transitions = transitions, initial = "user",
                          auto_transitions = False,
                          show_conditions = True)
-    machine.get_graph().draw('my_state_diagram.png', prog = 'dot')
     return machine
