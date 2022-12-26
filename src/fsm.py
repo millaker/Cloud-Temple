@@ -1,6 +1,6 @@
 from transitions.extensions import GraphMachine
 from utils import is_return, send_text_message, is_passed_roll, send_template_button, send_template_confirm
-from utils import send_template_carousel, send_image_url, push_message
+from utils import send_template_carousel, send_image_url, push_message, send_image_url_plus_text
 from linebot.models import MessageAction, CarouselColumn
 import random as rand
 
@@ -223,11 +223,11 @@ class TocMachine(GraphMachine):
         send_text_message(event.reply_token, "起源於2022，為了讓大眾能在線上也能享受到抽籤解籤的服務")
 
     def on_enter_donate(self, event):
-        send_image_url(event.reply_token, self.server_url + self.static_folder + "donation_box.jpg")
-        push_message(event.source.user_id, "請支持我們，讓我們可以繼續維護平台")
+        send_image_url_plus_text(event.reply_token, self.server_url + self.static_folder + "donation_box.jpg",
+        "請支持我們，讓我們可以繼續維護平台")
     def on_enter_Door(self, event):
-        send_image_url(event.reply_token, self.server_url + self.static_folder + "door.jpg")
-        push_message(event.source.user_id, "輸入 pray 開始參拜")
+        send_image_url_plus_text(event.reply_token, self.server_url + self.static_folder + "door.jpg",
+        "輸入 pray 開始參拜")
 
     def on_enter_Meditation(self, event):
         send_template_confirm(
@@ -255,24 +255,24 @@ class TocMachine(GraphMachine):
     def on_enter_DiceOne(self, event):
         num = rand.randint(1, 100)
         self.diceroll = num
-        send_image_url(event.reply_token, self.server_url + self.static_folder + "success.jpg")
-        push_message(event.source.user_id, "成功 還要成功兩次，輸入 cast 再擲一次")
+        send_image_url_plus_text(event.reply_token, self.server_url + self.static_folder + "success.jpg",
+        "成功 還要成功兩次，輸入 cast 再擲一次")
 
     def on_enter_DiceTwo(self, event):
         num = rand.randint(1, 100)
         self.diceroll = num
-        send_image_url(event.reply_token, self.server_url + self.static_folder + "success.jpg")
-        push_message(event.source.user_id, "成功 還要成功一次")
+        send_image_url_plus_text(event.reply_token, self.server_url + self.static_folder + "success.jpg",
+        "成功 還要成功一次，輸入 cast 再擲一次")
 
     def on_enter_DiceThree(self, event):
         num = rand.randint(1, 100)
         self.diceroll = num
-        send_image_url(event.reply_token, self.server_url + self.static_folder + "success.jpg")
-        push_message(event.source.user_id, "成功 輸入 reveal 來看抽籤結果")
+        send_image_url_plus_text(event.reply_token, self.server_url + self.static_folder + "success.jpg",
+        "成功 輸入 reveal 來看抽籤結果")
 
     def on_enter_Result(self, event):
-        send_image_url(event.reply_token, self.server_url + self.static_folder + "card" + str(self.card) + ".jpg")
-        push_message(event.source.user_id, "輸入 translate 看籤詩語意")
+        send_image_url_plus_text(event.reply_token, self.server_url + self.static_folder + "card" + str(self.card) + ".jpg",
+        "輸入 translate 看籤詩語意")
 
     def on_enter_Meaning(self, event):
         send_text_message(event.reply_token, meaning[self.card - 1] + "\n輸入 explain 來解籤")
@@ -282,6 +282,6 @@ class TocMachine(GraphMachine):
 
     def on_enter_Fail(self, event):
         num = rand.randint(1,2)
-        send_image_url(event.reply_token, self.server_url + self.static_folder + "fail" + str(num) + ".jpg")
-        push_message(event.source.user_id, "這張好像不是我們要的，輸入 draw 重新抽籤")
+        send_image_url_plus_text(event.reply_token, self.server_url + self.static_folder + "fail" + str(num) + ".jpg",
+        "這張好像不是我們要的，輸入 draw 重新抽籤")
 

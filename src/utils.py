@@ -19,6 +19,16 @@ def send_image_url(id, img_url):
 
     return "OK"
 
+def send_image_url_plus_text(id, img_url, text):
+    message = [ImageSendMessage(
+        original_content_url = img_url,
+        preview_image_url = img_url
+    )]
+    message.append(TextSendMessage(text = text))
+    line_bot_api.reply_message(id, message)
+
+    return "OK"
+
 def push_message(userid, msg):
     line_bot_api.push_message(userid, TextSendMessage(text=msg))
 
