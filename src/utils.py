@@ -67,4 +67,4 @@ def is_return(text):
 
 # Check if dice roll passed
 def is_passed_roll(num):
-    return num >= 20
+    return num >= 28

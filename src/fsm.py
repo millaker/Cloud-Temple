@@ -142,7 +142,7 @@ class TocMachine(GraphMachine):
 
     # Transition conditions
     def is_going_to_history(self, event):
-        text = event.message.text
+        text = event.message.text.strip().lower()
         if is_return(text):
             return False
         if text != "history":
@@ -150,7 +150,7 @@ class TocMachine(GraphMachine):
         return True
     
     def is_going_to_donate(self, event):
-        text = event.message.text
+        text = event.message.text.strip().lower()
         if is_return(text):
             return False
         if text != "donate":
@@ -158,28 +158,28 @@ class TocMachine(GraphMachine):
         return True
 
     def is_going_to_Door(self, event):
-        text = event.message.text
+        text = event.message.text.strip().lower()
         if is_return(text):
             return False
         if text != "visit":
             return False
         return True
     def is_going_to_Meditation(self, event):
-        text = event.message.text
+        text = event.message.text.strip().lower()
         if is_return(text):
             return False
         if text != "pray":
             return False
         return True
     def is_going_to_Start(self, event):
-        text = event.message.text
+        text = event.message.text.strip().lower()
         if is_return(text):
             return False
         if text != "draw":
             return False
         return True
     def is_going_to_Dice(self, event):
-        text = event.message.text
+        text = event.message.text.strip().lower()
         if is_return(text):
             return False
         if text != "cast":
@@ -188,21 +188,21 @@ class TocMachine(GraphMachine):
             return False
         return True
     def is_going_to_Result(self, event):
-        text = event.message.text
+        text = event.message.text.strip().lower()
         if is_return(text):
             return False
         if text != "reveal":
             return False
         return True
     def is_going_to_Meaning(self, event):
-        text = event.message.text
+        text = event.message.text.strip().lower()
         if is_return(text):
             return False
         if text != "translate":
             return False
         return True
     def is_going_to_Explanation(self, event):
-        text = event.message.text
+        text = event.message.text.strip().lower()
         if is_return(text):
             return False
         if text != "explain":
