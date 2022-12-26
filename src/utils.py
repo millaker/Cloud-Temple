@@ -63,7 +63,7 @@ def send_template_carousel(id, alt_text, columns):
 
 # Check if input is "return"
 def is_return(text):
-    return text == "return"
+    return text.strip().lower() == "return"
 
 # Check if dice roll passed
 def is_passed_roll(num):
